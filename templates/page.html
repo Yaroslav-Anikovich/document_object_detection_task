@@ -1,0 +1,44 @@
+<html>
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  </head>
+   <body bgcolor="#38DF64">
+     <form action='{{url_for("test_model")}}' method='post'>
+       <input id='file_name' placeholder='Enter image name' name='file_name'>
+     </form>
+       <button id ='cv'>Show image predicted by opencv</button>
+       <button id ='model'>Show image predicted by model</button>
+       <img src="" id="img" />
+   </body>
+  <script>
+    $(document).ready(function() {
+	$('#cv').click(function(){
+           $.ajax({
+           url: "{{ url_for ('get_opencv_img') }}",
+           type: "GET",
+           success: function(response) {
+               $("#img").attr('src', '/static/output_cv_' + document.getElementById("file_name").value);
+          },
+          error: function(xhr) {
+            //Do Something to handle error
+         }
+         });
+       });
+    });
+
+ $(document).ready(function() {
+	$('#model').click(function(){
+           $.ajax({
+           url: "{{ url_for ('get_model_img') }}",
+           type: "GET",
+           success: function(response) {
+               $("#img").attr('src', '/static/output_' + document.getElementById("file_name").value);
+          },
+          error: function(xhr) {
+            //Do Something to handle error
+         }
+         });
+       });
+    });
+  </script>
+</html>
